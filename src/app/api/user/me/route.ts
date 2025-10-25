@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPrisma } from "../../auth/register/route";
+import { getPrisma } from "@/lib/prisma";
 import { requireAuth } from "../../../../lib/auth";
 
 export async function GET(req: Request) {
@@ -8,7 +8,7 @@ export async function GET(req: Request) {
 
   const prisma = getPrisma();
   const user = await prisma.user.findUnique({
-    where: { id: (userPayload as any).id },
+    where: { id: (userPayload as { id: number }).id },
     select: { id: true, name: true, email: true },
   });
 

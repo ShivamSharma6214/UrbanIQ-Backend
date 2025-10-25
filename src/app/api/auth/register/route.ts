@@ -1,13 +1,7 @@
+// src/app/api/auth/register/route.ts
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-let prisma: PrismaClient;
-
-export function getPrisma() {
-  if (!prisma) prisma = new PrismaClient();
-  return prisma;
-}
+import { getPrisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const prisma = getPrisma();
@@ -23,5 +17,8 @@ export async function POST(req: Request) {
     data: { name, email, password: hashed },
   });
 
-  return NextResponse.json({ message: "User created", user: { id: user.id, email: user.email } });
+  return NextResponse.json({
+    message: "User created",
+    user: { id: user.id, email: user.email },
+  });
 }

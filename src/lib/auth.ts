@@ -7,7 +7,7 @@ export function verifyToken(token: string) {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     return decoded; // contains { id, email, iat, exp }
-  } catch (err) {
+  } catch {
     return null;
   }
 }
